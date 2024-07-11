@@ -28,17 +28,18 @@ export class HeroesService {
     return this.httpClient.post<Hero>(`${this.baseUrl}/heroes`,hero);
   }
 
-  updateHero(hero:Hero):Observable<Hero> {
-    if (!hero.id) throw Error('Hero id is required');
 
-    return this.httpClient.patch<Hero>(`${ this.baseUrl } /heroes/${ hero.id }`, hero);
-  }
+  updateHero(hero:Hero):Observable<Hero>{
+    if(!hero.id) throw Error('Hero id is required');
+    return this.httpClient.patch<Hero>(`${ this.baseUrl }/heroes/${hero.id}`,hero);
+  }
 
   deleteHeroById( id: string ):Observable<boolean>{
     return this.httpClient.delete(`${this.baseUrl}/heroes/${id}`)
     .pipe(
-      catchError( error=> of(false)),
-      map( resp => true)
+      map( resp => true),
+      catchError( err=> of(false)),
+
     );
   }
 }
